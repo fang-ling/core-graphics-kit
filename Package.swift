@@ -23,7 +23,8 @@ import PackageDescription
 let isDevelopment = false
 
 let dependencies = [
-  ("c-kit", "CKit", "main")
+  ("c-kit", "CKit", "main"),
+  ("swift-framework", "SwiftFramework", "main")
 ]
 
 let package = Package(
@@ -44,9 +45,7 @@ let package = Package(
     ),
     .target(
       name: "CoreGraphicsKitExtras",
-      dependencies: [
-        "CoreGraphicsKitEssentials"
-      ]
+      dependencies: ["CoreGraphicsKitEssentials"] + dependencies.map { .product(name: $0.1, package: $0.0) }
     ),
     .testTarget(
       name: "CoreGraphicsKitTests",
