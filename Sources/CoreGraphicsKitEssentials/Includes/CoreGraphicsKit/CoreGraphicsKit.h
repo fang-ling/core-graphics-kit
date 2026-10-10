@@ -21,6 +21,5 @@
 
 #include "../../Geometric Data Types/CoreGraphicsPoint.h"
 #include "../../Geometric Data Types/CoreGraphicsRectangle.h"
-#include "../../Geometric Data Types/CoreGraphicsSize.h"
 
 #endif /* CoreGraphicsKit_h */
