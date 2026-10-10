@@ -26,7 +26,7 @@ import SwiftFramework
 ///
 /// ## Topics
 ///
-/// ### Creating rectangles
+/// ### Creating a Rectangle
 ///
 /// - ``init(origin:size:)``
 /// - ``init(x:y:width:height:)``
@@ -35,12 +35,24 @@ import SwiftFramework
 ///
 /// - ``origin``
 /// - ``size``
+///
+/// ### Inspecting a Rectangle
+///
+/// - ``isNull``
 public struct CoreGraphicsRectangle: SwiftEquatable {
   /// The rectangle's origin point.
   public var origin: CoreGraphicsPoint
 
   /// The size of the rectangle.
   public var size: CoreGraphicsSize
+
+  /// A Boolean value indicating whether the rectangle is equal to the null rectangle.
+  ///
+  /// A null rectangle is the equivalent of an empty set. For example, the result of intersecting two disjoint rectangles is a null rectangle. A null rectangle cannot be drawn and interacts with other
+  /// rectangles in special ways.
+  public var isNull: CBoolean {
+    return self.origin.x.isNaN || self.origin.y.isNaN || self.size.width.isNaN || self.size.height.isNaN
+  }
 
   /// Creats a rectangle with the specified origin and size.
   ///
