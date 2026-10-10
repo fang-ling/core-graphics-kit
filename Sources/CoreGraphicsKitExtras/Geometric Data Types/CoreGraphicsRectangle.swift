@@ -39,6 +39,7 @@ import SwiftFramework
 /// ### Inspecting a Rectangle
 ///
 /// - ``isNull``
+/// - ``isEmpty``
 public struct CoreGraphicsRectangle: SwiftEquatable {
   /// The rectangle's origin point.
   public var origin: CoreGraphicsPoint
@@ -52,6 +53,13 @@ public struct CoreGraphicsRectangle: SwiftEquatable {
   /// rectangles in special ways.
   public var isNull: CBoolean {
     return self.origin.x.isNaN || self.origin.y.isNaN || self.size.width.isNaN || self.size.height.isNaN
+  }
+
+  /// A Boolean value indicating whether a rectangle has zero width or height, or is a null rectangle.
+  ///
+  /// An empty rectangle is either a null rectangle or a valid rectangle with zero height or width.
+  public var isEmpty: CBoolean {
+    return self.isNull || self.size.width == 0 || self.size.height == 0
   }
 
   /// Creats a rectangle with the specified origin and size.
