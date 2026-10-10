@@ -28,11 +28,22 @@ import SwiftFramework
 ///
 /// ## Topics
 ///
+/// ### Creating a Size
+///
+/// - ``init(width:height:)``
+///
 /// ### Geometric Properties
 ///
 /// - ``width``
 /// - ``height``
-public struct CoreGraphicsSize: SwiftEquatable {
+///
+/// ### Special Values
+///
+/// - ``zero``
+public struct CoreGraphicsSize: SwiftEquatable, SwiftSendable {
+  /// A size constant with width and height of `0`.
+  public static let zero: CoreGraphicsSize = CoreGraphicsSize(width: 0, height: 0)
+
   /// A width value.
   public var width: CFloatingPoint64
 
