@@ -3,7 +3,7 @@
 //  CoreGraphicsSize.swift
 //  core-graphics-kit
 //
-//  Created by Fang Ling on 2026/10/10.
+//  Created by Fang Ling on 2026/8/2.
 //
 //  This source file is part of the CoreGraphicsKit open source project
 //
