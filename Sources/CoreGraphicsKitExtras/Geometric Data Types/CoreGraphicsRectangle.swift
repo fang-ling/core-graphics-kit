@@ -16,10 +16,42 @@
 //
 //===----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------===//
 
+#if !os(iOS)
+
 import CKit
 import CoreGraphicsKitEssentials
+import SwiftFramework
 
-extension CoreGraphicsRectangle {
+/// A rectangle.
+///
+/// ## Topics
+///
+/// ### Creating rectangles
+///
+/// - ``init(origin:size:)``
+/// - ``init(x:y:width:height:)``
+///
+/// ### Geometric Properties
+///
+/// - ``origin``
+/// - ``size``
+public struct CoreGraphicsRectangle: SwiftEquatable {
+  /// The rectangle's origin point.
+  public var origin: CoreGraphicsPoint
+
+  /// The size of the rectangle.
+  public var size: CoreGraphicsSize
+
+  /// Creats a rectangle with the specified origin and size.
+  ///
+  /// - Parameters:
+  ///   - origin: The origin of the rectangle.
+  ///   - size: The size of the rectangle.
+  public init(origin: CoreGraphicsPoint, size: CoreGraphicsSize) {
+    self.origin = origin
+    self.size = size
+  }
+
   /// Creates a rectangle with the specified coordinate and size values.
   ///
   /// - Parameters:
@@ -30,10 +62,17 @@ extension CoreGraphicsRectangle {
   public init(x: CFloatingPoint64, y: CFloatingPoint64, width: CFloatingPoint64, height: CFloatingPoint64) {
     self.init(origin: CoreGraphicsPoint(x: x, y: y), size: CoreGraphicsSize(width: width, height: height))
   }
-}
 
-extension CoreGraphicsRectangle: @retroactive Swift::Equatable {
   public static func == (lhs: Self, rhs: Self) -> CBoolean {
-    return CoreGraphicsRectangleIsEqual(lhs, rhs)
+    return lhs.origin == rhs.origin && lhs.size == rhs.size
   }
 }
+
+#else
+
+import CoreGraphics
+
+/// A rectangle.
+public typealias CoreGraphicsRectangle = CoreGraphics::CGRect
+
+#endif
