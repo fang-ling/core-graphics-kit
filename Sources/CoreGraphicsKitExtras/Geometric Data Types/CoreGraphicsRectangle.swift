@@ -40,7 +40,14 @@ import SwiftFramework
 ///
 /// - ``isNull``
 /// - ``isEmpty``
-public struct CoreGraphicsRectangle: SwiftEquatable {
+///
+/// ### Special Values
+///
+/// - ``zero``
+public struct CoreGraphicsRectangle: SwiftEquatable, SwiftSendable {
+  /// A rectangle constant with location `(0,0)`, and width and height of `0`.
+  public static let zero: CoreGraphicsRectangle = CoreGraphicsRectangle.init(origin: CoreGraphicsPoint(x: 0, y: 0), size: .zero)
+
   /// The rectangle's origin point.
   public var origin: CoreGraphicsPoint
 
