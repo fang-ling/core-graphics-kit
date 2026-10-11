@@ -16,10 +16,69 @@
 //
 //===----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------===//
 
+#if !os(iOS)
+
 import CKit
 import CoreGraphicsKitEssentials
+import SwiftFramework
 
-extension CoreGraphicsRectangle {
+/// A rectangle.
+///
+/// ## Topics
+///
+/// ### Creating a Rectangle
+///
+/// - ``init(origin:size:)``
+/// - ``init(x:y:width:height:)``
+///
+/// ### Geometric Properties
+///
+/// - ``origin``
+/// - ``size``
+///
+/// ### Inspecting a Rectangle
+///
+/// - ``isNull``
+/// - ``isEmpty``
+///
+/// ### Special Values
+///
+/// - ``zero``
+public struct CoreGraphicsRectangle: SwiftEquatable, SwiftSendable {
+  /// A rectangle constant with location `(0,0)`, and width and height of `0`.
+  public static let zero: CoreGraphicsRectangle = CoreGraphicsRectangle.init(origin: CoreGraphicsPoint(x: 0, y: 0), size: .zero)
+
+  /// The rectangle's origin point.
+  public var origin: CoreGraphicsPoint
+
+  /// The size of the rectangle.
+  public var size: CoreGraphicsSize
+
+  /// A Boolean value indicating whether the rectangle is equal to the null rectangle.
+  ///
+  /// A null rectangle is the equivalent of an empty set. For example, the result of intersecting two disjoint rectangles is a null rectangle. A null rectangle cannot be drawn and interacts with other
+  /// rectangles in special ways.
+  public var isNull: CBoolean {
+    return self.origin.x.isNaN || self.origin.y.isNaN || self.size.width.isNaN || self.size.height.isNaN
+  }
+
+  /// A Boolean value indicating whether a rectangle has zero width or height, or is a null rectangle.
+  ///
+  /// An empty rectangle is either a null rectangle or a valid rectangle with zero height or width.
+  public var isEmpty: CBoolean {
+    return self.isNull || self.size.width == 0 || self.size.height == 0
+  }
+
+  /// Creats a rectangle with the specified origin and size.
+  ///
+  /// - Parameters:
+  ///   - origin: The origin of the rectangle.
+  ///   - size: The size of the rectangle.
+  public init(origin: CoreGraphicsPoint, size: CoreGraphicsSize) {
+    self.origin = origin
+    self.size = size
+  }
+
   /// Creates a rectangle with the specified coordinate and size values.
   ///
   /// - Parameters:
@@ -30,10 +89,17 @@ extension CoreGraphicsRectangle {
   public init(x: CFloatingPoint64, y: CFloatingPoint64, width: CFloatingPoint64, height: CFloatingPoint64) {
     self.init(origin: CoreGraphicsPoint(x: x, y: y), size: CoreGraphicsSize(width: width, height: height))
   }
-}
 
-extension CoreGraphicsRectangle: @retroactive Swift::Equatable {
   public static func == (lhs: Self, rhs: Self) -> CBoolean {
-    return CoreGraphicsRectangleIsEqual(lhs, rhs)
+    return lhs.origin == rhs.origin && lhs.size == rhs.size
   }
 }
+
+#else
+
+import CoreGraphics
+
+/// A rectangle.
+public typealias CoreGraphicsRectangle = CoreGraphics::CGRect
+
+#endif
